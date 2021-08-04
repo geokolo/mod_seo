@@ -1,0 +1,139 @@
+{% block delete_modal %}
+    <div class="modal fade" id="js-confirm-delete" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">             
+                    <h4 class="modal-title">{{ 'title.delete'|trans({}, 'Modules.Modseo.Admin') }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">              
+                    {{ 'confirm.delete'|trans({}, 'Modules.Modseo.Admin') }}
+                </div>
+                <div class="modal-footer">
+                    {{ form_start(formDelete, {"attr" : {'class':'pull-right'}}) }}
+                    {{ form_widget(formDelete, {'attr': {'onclick': ' SpinnerOpen(); '}} ) }}
+                    {{ form_end(formDelete) }}
+                    <div class="form-group">                 
+                    <button type="button" class="btn btn-outline-secondary pull-left" title="{{ 'button.cancel'|trans({}, 'Modules.Modseo.Admin') }}"
+                            data-dismiss="modal">{{ 'button.cancel'|trans({}, 'Modules.Modseo.Admin') }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block rename_modal %}
+    <div class="modal fade" id="js-confirm-rename" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                {{ form_start(formRename) }}
+                <div class="modal-header">         
+                    <h4 class="modal-title">{{ 'title.rename.file'|trans({}, 'Modules.Modseo.Admin') }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    {{ form_row(formRename.name) }}
+                </div>
+                <div class="modal-footer">
+                    {{ form_row(formRename.send, {'attr': {'onclick': ' SpinnerOpen(); '}}) }}
+                    <div class="form-group">                 
+                        <button type="button" class="btn btn-outline-secondary pull-left" 
+                            title="{{ 'button.cancel'|trans({}, 'Modules.Modseo.Admin') }}"
+                            data-dismiss="modal">{{ 'button.cancel'|trans({}, 'Modules.Modseo.Admin') }}
+                        </button>
+                    </div>  
+                </div>
+                {{ form_end(formRename) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block add_modal %}
+    <div class="modal fade" id="addFolder" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                {{ form_start(form) }}
+                <div class="modal-header">            
+                    <h4 class="modal-title">{{ 'title.add.folder'|trans({}, 'Modules.Modseo.Admin') }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>                   
+                </div>
+                <div class="modal-body">
+                    {{ form_row(form.name) }}
+                </div>
+                <div class="modal-footer">
+                    {{ form_row(form.send) }}
+                    <div class="form-group">                 
+                        <button type="button" class="btn btn-outline-secondary pull-left" 
+                            title="{{ 'button.cancel'|trans({}, 'Modules.Modseo.Admin') }}"
+                            data-dismiss="modal">{{ 'button.cancel'|trans({}, 'Modules.Modseo.Admin') }}
+                        </button>
+                    </div>           
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block preview_modal %}
+    <div class="modal fade" id="js-display-image" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <img src="" class="img-fluid" alt="">
+                </div>
+                <div class="modal-footer">
+                    <div class="form-group">                 
+                        <button type="button" class="btn btn-outline-secondary pull-left" 
+                            title="{{ 'button.cancel'|trans({}, 'Modules.Modseo.Admin') }}"
+                            data-dismiss="modal">{{ 'button.cancel'|trans({}, 'Modules.Modseo.Admin') }}
+                        </button>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block generatefile_modal %}
+    <div class="modal fade" id="js-confirm-generatefile" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">         
+                    <h4 class="modal-title module-modal-title">{{ 'title.generate'|trans({}, 'Modules.Modseo.Admin') }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>                  
+                </div>
+                <div class="modal-body">              
+                    {{ 'confirm.convert'|trans({}, 'Modules.Modseo.Admin') }}
+                </div>
+                <div class="modal-footer">
+                    {{ form_start(formGenerateFile, {"attr" : {'class':'pull-right'}}) }}
+                    {{ form_widget(formGenerateFile, {'attr': {'onclick': ' SpinnerOpen(); '}} ) }}                    
+                    {{ form_end(formGenerateFile) }}
+                    <div class="form-group">                 
+                        <button type="button" class="btn btn-outline-secondary pull-left" 
+                            title="{{ 'button.cancel'|trans({}, 'Modules.Modseo.Admin') }}"
+                            data-dismiss="modal">{{ 'button.cancel'|trans({}, 'Modules.Modseo.Admin') }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+<script type="text/javascript">
+    function SpinnerOpen() {
+        $('.modal').modal('hide');        
+        $("#filemanager").empty().append('<div class="container-fluid" id="filemanager"><div class="row"><div>{{ 'message.please.wait'|trans({}, 'Modules.Modseo.Admin') }}</div></div></div>');      
+    }
+</script>
+{% endblock %}
+
+

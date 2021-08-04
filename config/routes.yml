@@ -1,0 +1,35 @@
+file_manager:
+    path: mod_seo/filemanager
+    methods: [GET, POST]
+    defaults:
+      _controller: 'ModSeo\FileManagerBundle\Controller\FileManagerController::indexAction'
+
+file_manager_file:
+    path: mod_seo/file/{fileName}
+    methods: [GET, POST]
+    defaults:
+      _controller: 'ModSeo\FileManagerBundle\Controller\FileManagerController::binaryFileResponseAction'
+
+file_manager_delete:
+    path: mod_seo/delete/
+    methods: [GET, POST]
+    defaults:
+      _controller: 'ModSeo\FileManagerBundle\Controller\FileManagerController::deleteAction'
+
+file_manager_rename:
+    path: mod_seo/rename/{fileName}
+    methods: [GET, POST]
+    defaults:
+      _controller: 'ModSeo\FileManagerBundle\Controller\FileManagerController::renameFileAction'
+
+file_manager_upload:
+    path: mod_seo/upload/
+    methods: [GET, POST]
+    defaults:
+      _controller: 'ModSeo\FileManagerBundle\Controller\FileManagerController::uploadFileAction'
+
+file_manager_generatefile:
+    path: mod_seo/generatefile/{fileName}/{fileType}
+    methods: [GET, POST]
+    defaults:
+      _controller: 'ModSeo\FileManagerBundle\Controller\FileManagerController::generatefileAction'

@@ -1,0 +1,194 @@
+<div class="table-responsive list-blk">
+
+    <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">
+                {% block select_all %}
+                    <input type="checkbox" id="select-all" title="{{ 'select-all'|trans }}">
+                {% endblock %}
+            </th>
+            <th></th>
+            <th scope="col">
+                {{ order(fileManager, 'name') }}
+            </th>
+            <th scope="col" class="hidden-xs">
+                {{ order(fileManager, 'date') }}
+            </th>
+            <th scope="col" class="hidden-xs">
+                {{ order(fileManager, 'size') }}
+            </th>
+            <th scope="col" class="hidden-xs">
+                {{ order(fileManager, 'dimension') }}
+            </th>
+            <th class="text-right">{{ 'settings'|trans({}, 'Modules.Modseo.Admin') }}</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        {% if fileManager.parent %}
+            <tr>
+            <td></td>
+            <td>              
+            <a role="button" title="{{ 'button.parent'|trans({}, 'Modules.Modseo.Admin') }}" 
+                class="btn btn-outline-success btn-sm"
+                href="{{ fileManager.parent }}">
+                ...
+                {# <i class="material-icons">upload</i> #}
+            </a>
+            </td>
+            <td><span class="title">{{ 'button.parent'|trans({}, 'Modules.Modseo.Admin') }}</span></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            </tr>
+        {% endif %}
+
+        {% for fileEntity in fileArray %}
+            {% set file = fileEntity.file %}
+            <tr class="file-wrapper {{ fileEntity.isImage() ? 'img' : file.type }}">
+                <td>
+                    {% block file_checkbox %}
+                        <input type="checkbox" class="checkbox" name="delete[]" value="{{ file.fileName }}"
+                               title="{{ file.fileName }}">
+                    {% endblock %}
+                </td>
+                <td>
+                    {% block file_preview %}
+                        {{ fileEntity.preview ? fileEntity.preview.html|raw }}
+                    {% endblock %}
+                </td>
+                <td data-value="{{ file.fileName }}" {{ fileEntity.attribut|raw }}>
+                    {% block file_name %}
+                        {{ (fileEntity.preview.folder is defined ? fileEntity.preview.folder : file.fileName)|raw }}
+                    {% endblock %}
+                </td>
+                <td class="hidden-xs">
+                    {% block file_date %}
+                        <small>{{ file.mTime|date('d/m/Y') }}</small>
+                    {% endblock %}
+                </td>
+                <td class="hidden-xs">
+                    {% block file_size %}
+                        <small>{{ fileEntity.HTMLSize }}</small>
+                    {% endblock %}
+                </td>
+                <td class="hidden-xs">
+                    {% block file_dimension %}
+                        <small>{{ fileEntity.HTMLDimension }}</small>
+                    {% endblock %}
+                </td>
+                
+                <td class="text-right">
+                    
+                    {% block file_action %}
+                    <div class="btn-group">
+                        {% if fileEntity.isImage() %}
+                            <button type="button"                               
+                                class="btn btn-outline-success js-open-modal"
+                                data-trigger="click"
+                                data-container="body"
+                                data-toggle="modal"
+                                data-target="#js-display-image"
+                                data-placement="left"
+                                data-href='{{ fileEntity.preview.path }}'>            
+                                <i class="material-icons">visibility</i>
+                            </button>
+                        {% else %}
+                            <button type="button" class="btn btn-outline-success">
+                                <i class="material-icons">menu_open</i> 
+                            </button>
+                        {% endif %}
+
+                        <button
+                            class="btn btn-outline-success btn-sm dropdown-toggle dropdown-toggle-split"
+                            type="button"
+                            id="{{ file.fileName }}"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                        >
+                            {# <i class="material-icons">menu</i> #}
+                            {# { 'settings'|trans({}, 'Modules.Modseo.Admin') } #}
+                        </button>
+                        
+                        <div class="dropdown-menu menu-sm" aria-labelledby="{{ file.fileName }}">
+                            
+                            <button type="button" class="dropdown-item js-delete-modal"
+                                data-trigger="click"
+                                data-container="body"
+                                data-toggle="modal"
+                                data-target="#js-confirm-delete"
+                                data-placement="left"
+                                data-html="true"
+                                data-href='{{ path('file_manager_delete', fileManager.queryParameters|merge({'delete[]':file.fileName})) }}'>                            
+                            <i class="material-icons">delete</i>  {{ 'title.delete'|trans({}, 'Modules.Modseo.Admin') }}
+                            </button>
+                            
+                            <button type="button" class="dropdown-item js-rename-modal"
+                                data-trigger="click"
+                                data-container="body"
+                                data-toggle="modal"
+                                data-target="#js-confirm-rename"
+                                data-placement="left"
+                                data-html="true"
+                                data-name='{{ file.basename('.'~file.extension) }}'
+                                data-extension='{{ file.extension }}'
+                                data-href='{{ path('file_manager_rename', fileManager.queryParameters|merge({'fileName':file.fileName})) }}'>                      
+                            <i class="material-icons">edit</i> {{ 'title.rename.file'|trans({}, 'Modules.Modseo.Admin') }}
+                            </button>
+
+                            {% if file.type == "file" %}
+                                <a data-placement="left" title="{{ 'title.download'|trans({}, 'Modules.Modseo.Admin') }}"
+                                class="dropdown-item js-download"
+                                href="{{ path('file_manager_file', fileManager.queryParameters|merge({'fileName':file.fileName})) }}"
+                                download>                                               
+                                <i class="material-icons">download_for_offline</i> {{ 'title.download'|trans({}, 'Modules.Modseo.Admin') }}
+                                </a>
+                                {% if fileEntity.isImage() %}
+                                    {# 
+                                    <button type="button"
+                                            class="dropdown-item js-open-modal"
+                                            data-trigger="click"
+                                            data-container="body"
+                                            data-toggle="modal"
+                                            data-target="#js-display-image"
+                                            data-placement="left"
+                                            data-href='{{ fileEntity.preview.path }}'>            
+                                    <i class="material-icons">visibility</i> {{ 'title.preview.file'|trans({}, 'Modules.Modseo.Admin') }}
+                                    </button>
+                                    #}
+
+                                    {% if fileEntity.hasGeneratableTypes() %}
+                                    <hr style="margin-top:.2rem;margin-bottom:.2rem;" />
+                                        {% for generatableType in fileEntity.getGeneratableTypes() %}
+                                            <button type="button" class="dropdown-item js-generatefile-modal"
+                                                data-trigger="click"
+                                                data-container="body"
+                                                data-toggle="modal"
+                                                data-target="#js-confirm-generatefile"
+                                                data-placement="left"
+                                                data-html="true"
+                                                data-href='{{ path('file_manager_generatefile', fileManager.queryParameters|merge({'fileName':file.fileName, 'fileType':generatableType})) }}'>
+                                            <i class="material-icons">track_changes</i>  {{ ('table.'~generatableType)|trans({}, 'Modules.Modseo.Admin') }}
+                                            </button>
+                                        {% endfor %}
+                                    {% endif %}
+                                
+                                
+                                {% endif %}
+                            {% endif %}
+
+                        </div>
+                    {% endblock %}
+
+                    </div>
+                </div>
+
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

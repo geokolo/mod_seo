@@ -1,0 +1,34 @@
+services:
+  _defaults:
+    public: true
+
+  mod_seo.filemanager_settings:
+    class: ModSeo\FileManagerBundle\FileManagerSettings
+    arguments:
+      - '@prestashop.adapter.legacy.configuration'
+      - "@=service('prestashop.adapter.legacy.context').getLanguages()"
+
+  mod_seo.filetypeservice:
+    class: ModSeo\FileManagerBundle\Service\FileTypeService
+    arguments:
+      - "@prestashop.router"
+      - "@twig"
+
+  mod_seo.filemanagerservice:
+      class: ModSeo\FileManagerBundle\Service\FilemanagerService
+      arguments: ['@mod_seo.filemanager_settings', '@service_container']
+
+  mod_seo.filetypeextension:
+      class: ModSeo\FileManagerBundle\Twig\FileTypeExtension
+      tags: ['twig.extension']
+      arguments:
+        - "@mod_seo.filetypeservice"
+
+  mod_seo.orderextension:
+      class: ModSeo\FileManagerBundle\Twig\OrderExtension
+      tags: ['twig.extension']
+      arguments:
+        - "@router"
+
+  mod_seo.controller.filemanagercontroller:
+    class: ModSeo\FileManagerBundle\Controller\FileManagerController

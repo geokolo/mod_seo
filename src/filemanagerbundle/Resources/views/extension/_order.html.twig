@@ -1,0 +1,35 @@
+
+{#
+<a class="{{ not islist ? ('btn btn-sm btn-default'~(active ? ' active'))  }}" href="{{ href }}">
+    <i class="material-icons">{{ icon }}</i>
+    {{ ('table.'~type)|trans }}
+
+    #}
+    
+    {# <span class="{{ active }} {{ islist ? 'pull-right'}} fas fa-sort{{ icon }}"></span> #}
+
+    {#
+        <span class="{{ active }} {{ islist ? 'pull-right'}}">
+        <i class="material-icons">unfold_more</i>
+    </span>
+</a>
+#}
+
+<div
+    class="ps-sortable-column"
+    {% if active %}
+        data-sort-col-name="{{ ('table.'~type) }}"
+        data-sort-is-current="true"
+        data-sort-direction="{{ icon }}"
+    {% endif %}
+    >   
+    <span role="columnheader">{{ ('table.'~type)|trans({}, 'Modules.Modseo.Admin') }}</span>
+    <a role="button" 
+        class="ps-sort" 
+        aria-label="Sort"
+        href="{{ href }}"         
+        style="text-decoration: none;"></a>
+</div>
+
+
+

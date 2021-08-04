@@ -1,0 +1,23 @@
+{
+    "name": "prestashop/mod_seo",
+    "authors": [
+        {
+            "name": "GeoKolo",
+            "email": "g.gloeckner@hotmail.de"
+        },
+        {
+            "name": "GeoKolo"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "ModSeo\\": "src/"
+        },
+        "classmap": ["mod_seo.php", "src/"],
+        "exclude-from-classmap": []
+    },
+    "config": {
+        "prepend-autoloader": false
+    },
+    "type": "prestashop-module"
+}

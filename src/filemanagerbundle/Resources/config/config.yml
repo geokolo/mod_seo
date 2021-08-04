@@ -1,0 +1,16 @@
+file_manager_config:
+  web_dir: 'pdf'
+  conf:
+    default:
+      dir: '../'
+      type: 'image'
+      regex: '.webp|.png|.(jpe?g)$'
+      accept: '.webp,.png,.jpeg,.jpg'
+      tree: false
+      twig_extension:
+      cachebreaker: 
+      view: [['thumbnail', 'list'], ['list']]     
+      upload: 
+      max_file_size: 1048576 # (1Mo) size in bytes 
+      max_width: 1024
+      max_height: 768
